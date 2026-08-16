@@ -317,38 +317,52 @@ footer .desc { font-size: 13px; color: var(--muted-dim); }
   section { padding: 18px clamp(12px, 4vw, 48px); }
   .navlinks { gap: 18px; font-size: 14px; }
 
-  /* ── มือถือ: ตารางเปลี่ยนจากเลื่อนแนวนอน เป็นแกลเลอรีเรียงลงมา ──
-     ไม่ต้องปัดซ้ายขวาหาวันอีก เห็นครบทุกวันในตาเดียว */
-  .schedule {
-    grid-auto-flow: row;
-    grid-auto-columns: auto;
-    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-    overflow-x: visible;
-    justify-content: stretch;
-    gap: 8px;
-  }
-  .day { padding: 8px 7px; gap: 7px; border-radius: 3px; }
+  /* ── มือถือ: ทุกหมวดเป็น "ชั้นหนังสือ" เลื่อนซ้ายขวา ──────────
+     ปกเรียงเป็นแถวเดียว ปัดนิ้วดูได้ ไม่กองยาวลงมาเป็นตับ
+     ปกโผล่ค้างไว้ครึ่งใบที่ขอบขวา เป็นสัญญาณว่ายังมีต่อ */
+  .schedule { gap: 10px; }
+  .day { padding: 10px 8px; gap: 8px; }
   .day .code  { font-size: 9px; letter-spacing: 0.08em; }
   .day .label { font-size: 12px; }
   .day .items { gap: 6px; }
   .day .item .title { font-size: 10px; line-height: 1.25; }
 
-  /* การ์ดเรื่องเรียง 2 คอลัมน์แทนที่จะเป็นแถวเดียวใหญ่ๆ */
-  .hero-row { gap: 12px; }
-  .hero-card { width: calc(50% - 6px); }
+  .hero-row,
+  .grid {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 8px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hero-row > *,
+  .grid > * {
+    flex: 0 0 128px;
+    scroll-snap-align: start;
+  }
+  .hero-card { width: auto; }
   .hero-card .meta { padding: 10px 11px 12px; gap: 4px; }
-  .hero-card .meta .title { font-size: 14px; }
+  .hero-card .meta .title { font-size: 13px; }
   .hero-card .meta .genre { font-size: 11px; }
   .hero-card .meta .day   { font-size: 11px; }
-
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-  }
   .grid .meta .title { font-size: 13px; }
   .grid .meta .genre { font-size: 11px; }
 
-  /* กล่องแนะนำตัว: รูปอยู่บน ข้อความอยู่ล่าง อ่านง่ายกว่าบีบเป็นสองคอลัมน์ */
+  /* แถบเลื่อนบางๆ ไม่ให้บังปก */
+  .schedule::-webkit-scrollbar,
+  .hero-row::-webkit-scrollbar,
+  .grid::-webkit-scrollbar { height: 3px; }
+  .schedule::-webkit-scrollbar-thumb,
+  .hero-row::-webkit-scrollbar-thumb,
+  .grid::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+
+  /* กล่องแนะนำตัว: รูปอยู่บน ข้อความอยู่ล่าง อ่านง่ายกว่าบีบสองคอลัมน์ */
   .about { flex-direction: column; gap: 14px; padding: 20px 16px; }
   .about .txt { text-align: center; align-items: center; }
 }
