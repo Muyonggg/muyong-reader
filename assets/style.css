@@ -119,7 +119,10 @@ h2 { font-size: 24px; font-weight: 700; margin: 0 0 20px; }
 .schedule {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(120px, 1fr);
+  /* เพดาน 150px กันช่องยืดจนปกใหญ่เกินการ์ดหลักตอนเหลือวันน้อยๆ
+     (ครบ 7 วันก็ยังพอดีความกว้าง 1144px) */
+  grid-auto-columns: minmax(120px, 150px);
+  justify-content: center;
   gap: 12px;
   overflow-x: auto;
   padding-bottom: 4px;
