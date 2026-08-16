@@ -135,7 +135,9 @@
   }
 
   /* ── กำลังแปลอยู่ตอนนี้ ───────────────────────────────────── */
-  const ongoing = series.filter(s => s.status === 'ongoing');
+  /* เรื่องที่มีวันลงชัดเจนขึ้นในตารางข้างบนแล้ว ไม่ต้องซ้ำตรงนี้
+     หมวดนี้เหลือไว้ให้เรื่องที่ยังไม่มีวันลงประจำ */
+  const ongoing = series.filter(s => s.status === 'ongoing' && !(s.days || []).length);
   if (ongoing.length) {
     const row = el('div', { class: 'hero-row' });
     ongoing.forEach(s => row.appendChild(card(s, 'hero')));
