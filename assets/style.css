@@ -313,5 +313,42 @@ footer .desc { font-size: 13px; color: var(--muted-dim); }
 
 @media (max-width: 640px) {
   h1 { font-size: 28px; }
+  h2 { font-size: 20px; margin-bottom: 14px; }
+  section { padding: 18px clamp(12px, 4vw, 48px); }
   .navlinks { gap: 18px; font-size: 14px; }
+
+  /* ── มือถือ: ตารางเปลี่ยนจากเลื่อนแนวนอน เป็นแกลเลอรีเรียงลงมา ──
+     ไม่ต้องปัดซ้ายขวาหาวันอีก เห็นครบทุกวันในตาเดียว */
+  .schedule {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    overflow-x: visible;
+    justify-content: stretch;
+    gap: 8px;
+  }
+  .day { padding: 8px 7px; gap: 7px; border-radius: 3px; }
+  .day .code  { font-size: 9px; letter-spacing: 0.08em; }
+  .day .label { font-size: 12px; }
+  .day .items { gap: 6px; }
+  .day .item .title { font-size: 10px; line-height: 1.25; }
+
+  /* การ์ดเรื่องเรียง 2 คอลัมน์แทนที่จะเป็นแถวเดียวใหญ่ๆ */
+  .hero-row { gap: 12px; }
+  .hero-card { width: calc(50% - 6px); }
+  .hero-card .meta { padding: 10px 11px 12px; gap: 4px; }
+  .hero-card .meta .title { font-size: 14px; }
+  .hero-card .meta .genre { font-size: 11px; }
+  .hero-card .meta .day   { font-size: 11px; }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .grid .meta .title { font-size: 13px; }
+  .grid .meta .genre { font-size: 11px; }
+
+  /* กล่องแนะนำตัว: รูปอยู่บน ข้อความอยู่ล่าง อ่านง่ายกว่าบีบเป็นสองคอลัมน์ */
+  .about { flex-direction: column; gap: 14px; padding: 20px 16px; }
+  .about .txt { text-align: center; align-items: center; }
 }
