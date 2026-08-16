@@ -59,10 +59,16 @@
   }
 
   /* ── ตารางลงประจำสัปดาห์ ──────────────────────────────────── */
-  const todayIdx = (new Date().getDay() + 6) % 7;   // จันทร์ = 0
-  const schedule = el('div', { class: 'schedule' });
+  /* hideEmptyDays ใน data.json: true (ค่าเริ่มต้น) = ซ่อนวันที่ยังไม่มีเรื่องลง
+     ตั้งเป็น false ถ้าอยากให้โชว์ครบ 7 วันตลอด */
+  const hideEmpty = site.hideEmptyDays !== false;
+  const todayIdx  = (new Date().getDay() + 6) % 7;   // จันทร์ = 0
+  const schedule  = el('div', { class: 'schedule' });
 
   DAY_ORDER.forEach((d, i) => {
+    const onThisDay = series.filter(s => (s.days || []).includes(d));
+    if (hideEmpty && !onThisDay.length) return;
+
     const day = el('div', { class: 'day' + (i === todayIdx ? ' today' : '') }, [
       el('div', {}, [
         el('span', { class: 'code',  text: DAY_META[d].code }),
@@ -72,7 +78,7 @@
     ]);
 
     const box = el('div', { class: 'items' });
-    series.filter(s => (s.days || []).includes(d)).forEach(s => {
+    onThisDay.forEach(s => {
       const url  = readLink(s);
       const thumb = el('div', { class: 'thumb-wrap' }, [ coverImg(s.cover, s.title) ]);
       const label = el('span', { class: 'title', text: s.title });
@@ -87,12 +93,15 @@
     schedule.appendChild(day);
   });
 
-  main.appendChild(
-    el('section', {}, [
-      el('h2', { class: 'center', text: 'ตารางลงเรื่องประจำสัปดาห์' }),
-      schedule
-    ])
-  );
+  /* ถ้าซ่อนจนไม่เหลือสักวัน ก็ไม่ต้องขึ้นหัวข้อตารางเลย */
+  if (schedule.children.length) {
+    main.appendChild(
+      el('section', {}, [
+        el('h2', { class: 'center', text: 'ตารางลงเรื่องประจำสัปดาห์ชนต้นฉบับ' }),
+        schedule
+      ])
+    );
+  }
 
   /* ── การ์ดเรื่อง ───────────────────────────────────────────── */
   function card(s, variant) {
@@ -116,16 +125,6 @@
       el('span', { class: 'title', text: s.title }),
       el('span', { class: 'genre', text: (s.genres || []).join(' · ') })
     ]);
-
-    /* บรรทัดสถานะอัปเดต — หัวใจของหน้านี้ */
-    if (s.chapters) {
-      meta.appendChild(el('span', {
-        class: 'chapters',
-        text: s.status === 'completed'
-          ? 'จบแล้ว ' + s.chapters + ' ตอน'
-          : 'อัปเดตถึงตอนที่ ' + s.chapters
-      }));
-    }
 
     if (variant === 'hero') {
       const dayLabel = (s.days || []).map(d => DAY_META[d].label).join(' ');

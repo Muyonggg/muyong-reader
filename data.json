@@ -5,52 +5,67 @@
     "banner": "images/banner.webp",
     "avatar": "images/avatar.webp",
     "aboutName": "Muyong",
-    "aboutText": "แปลการ์ตูนเป็นงานอดิเรกส่วนตัว ส่วนใหญ่เป็นนิยายวายจีนและเกาหลี อัปเดตตามตารางด้านบน"
+    "aboutText": "แปลการ์ตูนเป็นงานอดิเรกส่วนตัว ส่วนใหญ่เป็นนิยายวายจีนและเกาหลี อัปเดตตามตารางด้านบน",
+    "hideEmptyDays": true
   },
-
   "series": [
     {
-      "id": "shadow-queen",
-      "title": "ราชินีในเงามืด",
-      "genres": ["แฟนตาซี", "วาย"],
+      "id": "moon-shadow-gate",
+      "title": "เปิดประตูสู่เงาจันทร์",
+      "genres": [],
       "status": "ongoing",
-      "days": ["mon", "thu"],
-      "chapters": 42,
-      "cover": "images/covers/shadow-queen.webp",
-      "readUrl": "https://www.facebook.com/ใส่ลิงก์จริงตรงนี้"
+      "days": [
+        "tue"
+      ],
+      "cover": "images/covers/moon-shadow-gate.webp",
+      "readUrl": "https://readtoon.com/content/welcome-to-howoldang"
     },
-
     {
-      "id": "flower-assassin",
-      "title": "นักฆ่าผู้รักดอกไม้",
-      "genres": ["แอ็กชัน", "วาย"],
+      "id": "heros-bed",
+      "title": "ตื่นมาอีกทีก็อยู่บนเตียงพระเอก",
+      "genres": [],
       "status": "ongoing",
-      "days": ["tue", "fri", "sun"],
-      "chapters": 18,
-      "cover": "images/covers/flower-assassin.webp",
-      "readUrl": ""
+      "days": [
+        "fri"
+      ],
+      "cover": "images/covers/heros-bed.webp",
+      "readUrl": "https://readtoon.com/content/rolling-in-bed-with-the-male-lead"
     },
-
     {
-      "id": "villain-reborn",
-      "title": "เกิดใหม่เป็นตัวร้ายในนิยาย",
-      "genres": ["ไอโซไก", "ตลก"],
+      "id": "jade-pavilion-spring",
+      "title": "ศาลาหยกเคียงกลางวสันต์",
+      "genres": [],
       "status": "ongoing",
-      "days": ["wed", "sat"],
-      "chapters": 65,
-      "cover": "images/covers/villain-reborn.webp",
-      "readUrl": ""
+      "days": [],
+      "cover": "images/covers/jade-pavilion-spring.webp",
+      "readUrl": "https://readtoon.com/content/spring-pavilion"
     },
-
     {
-      "id": "hundred-years-wait",
-      "title": "หนึ่งร้อยปีแห่งการรอคอย",
-      "genres": ["ดราม่า", "วาย"],
+      "id": "brother-i-hate",
+      "title": "ถึงน้องชายที่ฉันเกลียดชัง",
+      "genres": [],
       "status": "completed",
       "days": [],
-      "chapters": 80,
-      "cover": "images/covers/hundred-years-wait.webp",
-      "readUrl": ""
+      "cover": "images/covers/brother-i-hate.webp",
+      "readUrl": "https://readtoon.com/content/hatedsibling"
+    },
+    {
+      "id": "stop-it",
+      "title": "หยุดนะ, หยุดที!!",
+      "genres": [],
+      "status": "completed",
+      "days": [],
+      "cover": "images/covers/stop-it.webp",
+      "readUrl": "https://readtoon.com/content/stop-stop"
+    },
+    {
+      "id": "dropout",
+      "title": "Dropout",
+      "genres": [],
+      "status": "completed",
+      "days": [],
+      "cover": "images/covers/dropout.webp",
+      "readUrl": "https://readtoon.com/content/dropout"
     }
   ]
 }

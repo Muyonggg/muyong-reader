@@ -248,13 +248,6 @@ a:hover .cover, .thumb-wrap:hover .cover { transform: scale(1.06); }
 .hero-card .meta .genre { font-size: 13px; color: var(--muted); }
 .hero-card .meta .day   { font-size: 12px; color: var(--muted-dim); }
 
-/* บรรทัด "อัปเดตถึงตอนที่ N" */
-.meta .chapters {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--gold-soft);
-}
-
 /* ปกที่ยังไม่ได้ใส่ลิงก์อ่าน — ไม่ให้ดูเหมือนกดได้ */
 .cover-link.no-link { cursor: default; }
 .cover-link.no-link:hover .cover { transform: none; }
