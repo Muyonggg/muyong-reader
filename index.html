@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muyong — รวมงานแปลการ์ตูน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html">
+    <span class="dot"></span>
+    <span>Muyong</span>
+  </a>
+  <div class="navlinks">
+    <a href="index.html" class="active">หน้าแรก</a>
+  </div>
+</nav>
+
+<div id="main"></div>
+
+<footer>
+  <span class="name" id="footer-name">Muyong</span>
+  <span class="desc" id="footer-desc"></span>
+</footer>
+
+<script src="assets/app.js"></script>
+<script>
+(async function () {
+  let data;
+  try {
+    data = await loadData();
+  } catch (e) {
+    showError('โหลดข้อมูลไม่ได้: ' + e.message +
+      '<br>ถ้าเปิดไฟล์นี้จากเครื่องตรงๆ (file://) เบราว์เซอร์จะบล็อก — ต้องเปิดผ่านเว็บเซิร์ฟเวอร์');
+    return;
+  }
+
+  const site   = data.site || {};
+  const series = data.series || [];
+  const main   = document.getElementById('main');
+  const byName = site.aboutName || site.title || 'Muyong';
+
+  document.title = (site.title || 'Muyong') + ' — รวมงานแปลการ์ตูน';
+  document.getElementById('footer-name').textContent = byName;
+  document.getElementById('footer-desc').textContent = site.tagline || '';
+
+  /* ── แบนเนอร์ ─────────────────────────────────────────────── */
+  if (site.banner) {
+    main.appendChild(
+      el('section', {}, [
+        el('div', { class: 'banner-wrap' }, [ coverImg(site.banner, 'ปกเว็บ', 'banner') ])
+      ])
+    );
+  }
+
+  /* ── ตารางลงประจำสัปดาห์ ──────────────────────────────────── */
+  const todayIdx = (new Date().getDay() + 6) % 7;   // จันทร์ = 0
+  const schedule = el('div', { class: 'schedule' });
+
+  DAY_ORDER.forEach((d, i) => {
+    const day = el('div', { class: 'day' + (i === todayIdx ? ' today' : '') }, [
+      el('div', {}, [
+        el('span', { class: 'code',  text: DAY_META[d].code }),
+        el('br'),
+        el('span', { class: 'label', text: DAY_META[d].label })
+      ])
+    ]);
+
+    const box = el('div', { class: 'items' });
+    series.filter(s => (s.days || []).includes(d)).forEach(s => {
+      const url  = readLink(s);
+      const thumb = el('div', { class: 'thumb-wrap' }, [ coverImg(s.cover, s.title) ]);
+      const label = el('span', { class: 'title', text: s.title });
+
+      box.appendChild(
+        url
+          ? el('a', { class: 'item', href: url, target: '_blank', rel: 'noopener' }, [thumb, label])
+          : el('div', { class: 'item' }, [thumb, label])
+      );
+    });
+    day.appendChild(box);
+    schedule.appendChild(day);
+  });
+
+  main.appendChild(
+    el('section', {}, [
+      el('h2', { class: 'center', text: 'ตารางลงเรื่องประจำสัปดาห์' }),
+      schedule
+    ])
+  );
+
+  /* ── การ์ดเรื่อง ───────────────────────────────────────────── */
+  function card(s, variant) {
+    const url = readLink(s);
+
+    /* ปกเป็นลิงก์ออกไปที่ที่ลงจริง ถ้ายังไม่ใส่ลิงก์ก็เป็นรูปเฉยๆ */
+    const inner = [ coverImg(s.cover, s.title) ];
+    if (variant === 'grid') {
+      inner.push(el('span', {
+        class: 'status-badge ' + s.status,
+        text: (STATUS_META[s.status] || {}).label || ''
+      }));
+    }
+    inner.push(el('span', { class: 'by-badge', text: 'แปลไทยโดย ' + byName }));
+
+    const link = url
+      ? el('a', { class: 'cover-link', href: url, target: '_blank', rel: 'noopener' }, inner)
+      : el('div', { class: 'cover-link no-link' }, inner);
+
+    const meta = el('div', { class: 'meta' }, [
+      el('span', { class: 'title', text: s.title }),
+      el('span', { class: 'genre', text: (s.genres || []).join(' · ') })
+    ]);
+
+    /* บรรทัดสถานะอัปเดต — หัวใจของหน้านี้ */
+    if (s.chapters) {
+      meta.appendChild(el('span', {
+        class: 'chapters',
+        text: s.status === 'completed'
+          ? 'จบแล้ว ' + s.chapters + ' ตอน'
+          : 'อัปเดตถึงตอนที่ ' + s.chapters
+      }));
+    }
+
+    if (variant === 'hero') {
+      const dayLabel = (s.days || []).map(d => DAY_META[d].label).join(' ');
+      if (dayLabel) meta.appendChild(el('span', { class: 'day', text: 'ลง' + dayLabel }));
+      return el('div', { class: 'hero-card' }, [ el('div', { class: 'corner' }), link, meta ]);
+    }
+    return el('div', {}, [ link, meta ]);
+  }
+
+  /* ── กำลังแปลอยู่ตอนนี้ ───────────────────────────────────── */
+  const ongoing = series.filter(s => s.status === 'ongoing');
+  if (ongoing.length) {
+    const row = el('div', { class: 'hero-row' });
+    ongoing.forEach(s => row.appendChild(card(s, 'hero')));
+    main.appendChild(
+      el('section', {}, [
+        el('p',  { class: 'eyebrow center', text: 'NOW TRANSLATING' }),
+        el('h1', { class: 'center', text: 'กำลังแปลอยู่ตอนนี้' }),
+        row
+      ])
+    );
+  }
+
+  /* ── แปลจบแล้ว ────────────────────────────────────────────── */
+  const done = series.filter(s => s.status === 'completed');
+  if (done.length) {
+    const grid = el('div', { class: 'grid' });
+    done.forEach(s => grid.appendChild(card(s, 'grid')));
+    main.appendChild(
+      el('section', {}, [ el('h2', { class: 'center', text: 'แปลจบแล้ว' }), grid ])
+    );
+  }
+
+  /* ── เกี่ยวกับ ────────────────────────────────────────────── */
+  main.appendChild(
+    el('section', {}, [
+      el('div', { class: 'about' }, [
+        site.avatar ? coverImg(site.avatar, byName, '') : null,
+        el('div', { class: 'txt' }, [
+          el('span', { class: 'name', text: byName }),
+          el('span', { class: 'desc', text: site.aboutText || '' })
+        ])
+      ])
+    ])
+  );
+})();
+</script>
+
+</body>
+</html>

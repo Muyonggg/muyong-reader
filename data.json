@@ -1,0 +1,56 @@
+{
+  "site": {
+    "title": "Muyong",
+    "tagline": "พื้นที่ส่วนตัวสำหรับรวมงานแปลการ์ตูน อัปเดตตามตารางด้านบน",
+    "banner": "images/banner.webp",
+    "avatar": "images/avatar.webp",
+    "aboutName": "Muyong",
+    "aboutText": "แปลการ์ตูนเป็นงานอดิเรกส่วนตัว ส่วนใหญ่เป็นนิยายวายจีนและเกาหลี อัปเดตตามตารางด้านบน"
+  },
+
+  "series": [
+    {
+      "id": "shadow-queen",
+      "title": "ราชินีในเงามืด",
+      "genres": ["แฟนตาซี", "วาย"],
+      "status": "ongoing",
+      "days": ["mon", "thu"],
+      "chapters": 42,
+      "cover": "images/covers/shadow-queen.webp",
+      "readUrl": "https://www.facebook.com/ใส่ลิงก์จริงตรงนี้"
+    },
+
+    {
+      "id": "flower-assassin",
+      "title": "นักฆ่าผู้รักดอกไม้",
+      "genres": ["แอ็กชัน", "วาย"],
+      "status": "ongoing",
+      "days": ["tue", "fri", "sun"],
+      "chapters": 18,
+      "cover": "images/covers/flower-assassin.webp",
+      "readUrl": ""
+    },
+
+    {
+      "id": "villain-reborn",
+      "title": "เกิดใหม่เป็นตัวร้ายในนิยาย",
+      "genres": ["ไอโซไก", "ตลก"],
+      "status": "ongoing",
+      "days": ["wed", "sat"],
+      "chapters": 65,
+      "cover": "images/covers/villain-reborn.webp",
+      "readUrl": ""
+    },
+
+    {
+      "id": "hundred-years-wait",
+      "title": "หนึ่งร้อยปีแห่งการรอคอย",
+      "genres": ["ดราม่า", "วาย"],
+      "status": "completed",
+      "days": [],
+      "chapters": 80,
+      "cover": "images/covers/hundred-years-wait.webp",
+      "readUrl": ""
+    }
+  ]
+}
